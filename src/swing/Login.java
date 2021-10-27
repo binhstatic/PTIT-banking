@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.util.Vector;
 import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 import model.NguoiDung;
 import model.PhanManh;
 import service.NguoiDungService;

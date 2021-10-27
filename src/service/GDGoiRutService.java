@@ -6,11 +6,7 @@
 package service;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import model.GDGoiRut;
-import model.NguoiDung;
 
 /**
  *
@@ -22,7 +18,7 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
         super(tenServer, taiKhoan, matKhau);
     }
    
-     public int chuyenTien(String sotk, double sotien, String manv) {
+     public int guiTien(String sotk, double sotien, String manv) {
         try {
             String sql = "exec [dbo].[sp_GuiTien] ?, ?, ?";
             PreparedStatement preStatement=connection.prepareStatement(sql);
@@ -36,7 +32,19 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
         return -1;
     }
     
-    
+    public int rutTien(String sotk, double sotien, String manv) {
+        try {
+            String sql = "exec [dbo].[sp_RutTien] ?, ?, ?";
+            PreparedStatement preStatement=connection.prepareStatement(sql);
+            preStatement.setString(1, sotk);
+            preStatement.setDouble(2, sotien);
+            preStatement.setString(3, manv);
+            return preStatement.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
      
      
 }

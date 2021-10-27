@@ -11,7 +11,6 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import model.GDGoiRut;
 import model.GiaoDich;
 import model.KhachHang;
 import model.NguoiDung;
@@ -20,7 +19,6 @@ import service.GDGoiRutService;
 import service.GiaoDichService;
 import service.KhachHangService;
 import service.NhanVienService;
-import service.SQLServerService;
 
 /**
  *
@@ -40,7 +38,7 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         setColor(btn_Home);
         ind_1.setOpaque(true);
-        resetColor(new JPanel[]{btn_ChuyenTien, btn_KhachHang, btn_TaiKhoan, btn_GiaoDich, btn_NhanVien}, new JPanel[]{ind_5, ind_2, ind_3, ind_4, ind_6});
+        resetColor(new JPanel[]{btn_BaoCao, btn_KhachHang, btn_TaiKhoan, btn_GiaoDich, btn_NhanVien}, new JPanel[]{ind_5, ind_2, ind_3, ind_4, ind_6});
         home.setVisible(true);
         employee.setVisible(false);
         customer.setVisible(false);
@@ -79,7 +77,7 @@ public class Home extends javax.swing.JFrame {
         btn_GiaoDich = new javax.swing.JPanel();
         ind_4 = new javax.swing.JPanel();
         jLabel34 = new javax.swing.JLabel();
-        btn_ChuyenTien = new javax.swing.JPanel();
+        btn_BaoCao = new javax.swing.JPanel();
         ind_5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         btn_NhanVien = new javax.swing.JPanel();
@@ -128,10 +126,10 @@ public class Home extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_SoTaiKhoanChuyen = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        tf_SoTienChuyen = new javax.swing.JTextField();
+        btn_ChuyenTien = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -140,10 +138,10 @@ public class Home extends javax.swing.JFrame {
         jLabel40 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel41 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        tf_SoTienRut = new javax.swing.JTextField();
+        btn_RutTien = new javax.swing.JButton();
         jLabel51 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
+        lbl_SoDu = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         tf_SoTK = new javax.swing.JTextField();
@@ -387,14 +385,14 @@ public class Home extends javax.swing.JFrame {
 
         task_bar.add(btn_GiaoDich, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 110, -1));
 
-        btn_ChuyenTien.setBackground(new java.awt.Color(23, 35, 51));
-        btn_ChuyenTien.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btn_ChuyenTien.addMouseListener(new java.awt.event.MouseAdapter() {
+        btn_BaoCao.setBackground(new java.awt.Color(23, 35, 51));
+        btn_BaoCao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btn_BaoCao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_ChuyenTienMouseClicked(evt);
+                btn_BaoCaoMouseClicked(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_ChuyenTienMouseReleased(evt);
+                btn_BaoCaoMouseReleased(evt);
             }
         });
 
@@ -414,30 +412,30 @@ public class Home extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Chuyển Tiền");
+        jLabel9.setText("Báo Cáo");
 
-        javax.swing.GroupLayout btn_ChuyenTienLayout = new javax.swing.GroupLayout(btn_ChuyenTien);
-        btn_ChuyenTien.setLayout(btn_ChuyenTienLayout);
-        btn_ChuyenTienLayout.setHorizontalGroup(
-            btn_ChuyenTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_ChuyenTienLayout.createSequentialGroup()
+        javax.swing.GroupLayout btn_BaoCaoLayout = new javax.swing.GroupLayout(btn_BaoCao);
+        btn_BaoCao.setLayout(btn_BaoCaoLayout);
+        btn_BaoCaoLayout.setHorizontalGroup(
+            btn_BaoCaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_BaoCaoLayout.createSequentialGroup()
                 .addComponent(ind_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel9)
-                .addGap(0, 23, Short.MAX_VALUE))
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 29, Short.MAX_VALUE))
         );
-        btn_ChuyenTienLayout.setVerticalGroup(
-            btn_ChuyenTienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(btn_ChuyenTienLayout.createSequentialGroup()
+        btn_BaoCaoLayout.setVerticalGroup(
+            btn_BaoCaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btn_BaoCaoLayout.createSequentialGroup()
                 .addComponent(ind_5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(btn_ChuyenTienLayout.createSequentialGroup()
+            .addGroup(btn_BaoCaoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        task_bar.add(btn_ChuyenTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 110, -1));
+        task_bar.add(btn_BaoCao, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 110, -1));
 
         btn_NhanVien.setBackground(new java.awt.Color(23, 35, 51));
         btn_NhanVien.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -673,7 +671,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel36.setText(" ");
+        jLabel36.setText(" Giao Dịch");
 
         javax.swing.GroupLayout btn_GiaoDich1Layout = new javax.swing.GroupLayout(btn_GiaoDich1);
         btn_GiaoDich1.setLayout(btn_GiaoDich1Layout);
@@ -725,7 +723,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel29.setText(" ");
+        jLabel29.setText("Báo Cáo");
 
         javax.swing.GroupLayout btn_ChuyenTien1Layout = new javax.swing.GroupLayout(btn_ChuyenTien1);
         btn_ChuyenTien1.setLayout(btn_ChuyenTien1Layout);
@@ -930,19 +928,19 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Chuyển tiền");
 
-        jTextField2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_SoTaiKhoanChuyen.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
         jLabel4.setText("Số tài khoản gửi");
 
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_SoTienChuyen.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("→");
-        jButton1.setOpaque(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_ChuyenTien.setBackground(new java.awt.Color(255, 255, 255));
+        btn_ChuyenTien.setText("→");
+        btn_ChuyenTien.setOpaque(false);
+        btn_ChuyenTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_ChuyenTienActionPerformed(evt);
             }
         });
 
@@ -963,13 +961,13 @@ public class Home extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel4)
                                 .addGap(20, 20, 20))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tf_SoTaiKhoanChuyen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tf_SoTienChuyen, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1))
+                                .addComponent(btn_ChuyenTien))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(55, 55, 55)
                                 .addComponent(jLabel5)))))
@@ -982,10 +980,10 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField6)
+                    .addComponent(tf_SoTienChuyen)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jTextField2)))
+                        .addComponent(btn_ChuyenTien)
+                        .addComponent(tf_SoTaiKhoanChuyen)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -1000,6 +998,11 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setText("Gửi tiền");
 
         tf_SoTienGui.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_SoTienGui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tf_SoTienGuiActionPerformed(evt);
+            }
+        });
 
         btn_GuiTien.setBackground(new java.awt.Color(255, 255, 255));
         btn_GuiTien.setText("→");
@@ -1051,13 +1054,13 @@ public class Home extends javax.swing.JFrame {
         jLabel41.setForeground(new java.awt.Color(51, 51, 51));
         jLabel41.setText("Rút tiền");
 
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_SoTienRut.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("→");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btn_RutTien.setBackground(new java.awt.Color(255, 255, 255));
+        btn_RutTien.setText("→");
+        btn_RutTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btn_RutTienActionPerformed(evt);
             }
         });
 
@@ -1075,9 +1078,9 @@ public class Home extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tf_SoTienRut, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton3))))
+                                .addComponent(btn_RutTien))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel51)))
@@ -1090,15 +1093,15 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(jLabel41)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jTextField9))
+                    .addComponent(btn_RutTien)
+                    .addComponent(tf_SoTienRut))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel51)
                 .addContainerGap())
         );
 
-        jLabel50.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel50.setText("10.321.031 VNĐ");
+        lbl_SoDu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbl_SoDu.setText("10.321.031 VNĐ");
 
         javax.swing.GroupLayout pnl_GiaoDichLayout = new javax.swing.GroupLayout(pnl_GiaoDich);
         pnl_GiaoDich.setLayout(pnl_GiaoDichLayout);
@@ -1115,7 +1118,7 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_GiaoDichLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbl_SoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)))
                 .addContainerGap())
         );
@@ -1130,7 +1133,7 @@ public class Home extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lbl_SoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(50, 50, 50)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
@@ -1580,7 +1583,7 @@ public class Home extends javax.swing.JFrame {
         employee.setVisible(false);
         customer.setVisible(false);
         giaodich.setVisible(false);
-        resetColor(new JPanel[]{btn_Home, btn_KhachHang, btn_TaiKhoan, btn_GiaoDich, btn_ChuyenTien, btn_NhanVien}, new JPanel[]{ind_1, ind_2, ind_3, ind_4, ind_5, ind_6});
+        resetColor(new JPanel[]{btn_Home, btn_KhachHang, btn_TaiKhoan, btn_GiaoDich, btn_BaoCao, btn_NhanVien}, new JPanel[]{ind_1, ind_2, ind_3, ind_4, ind_5, ind_6});
         selected.setVisible(true);
         index.setOpaque(true);
         setColor(button);
@@ -1623,25 +1626,20 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_exitMousePressed
 
-    private void btn_ChuyenTienMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ChuyenTienMouseReleased
+    private void btn_BaoCaoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BaoCaoMouseReleased
 
-    }//GEN-LAST:event_btn_ChuyenTienMouseReleased
+    }//GEN-LAST:event_btn_BaoCaoMouseReleased
 
-    private void btn_ChuyenTienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ChuyenTienMouseClicked
+    private void btn_BaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BaoCaoMouseClicked
 
-    }//GEN-LAST:event_btn_ChuyenTienMouseClicked
+    }//GEN-LAST:event_btn_BaoCaoMouseClicked
 
     private void jLabel42MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel42MouseClicked
         pnl_7.setVisible(false);
     }//GEN-LAST:event_jLabel42MouseClicked
 
     private void btn_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_NhanVienMouseClicked
-        setColor(btn_NhanVien);
-        ind_6.setOpaque(true);
-        resetColor(new JPanel[]{btn_Home, btn_KhachHang, btn_TaiKhoan}, new JPanel[]{ind_1, ind_2, ind_3, ind_4, ind_5});
-        customer.setVisible(false);
-        employee.setVisible(true);
-        home.setVisible(false);
+        selectedTaskBar(employee, ind_6, btn_NhanVien);
         DefaultTableModel dtmNhanVien = (DefaultTableModel) tbl_NhanVien.getModel();
         dsnv = new NhanVienService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).docToanBoNhanVien();
         dtmNhanVien.setRowCount(0);
@@ -1695,21 +1693,21 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_exit1MousePressed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_ChuyenTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ChuyenTienActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_ChuyenTienActionPerformed
 
     private void btn_GuiTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuiTienActionPerformed
         GDGoiRutService guiTien = new GDGoiRutService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
-        if (guiTien.chuyenTien(tf_SoTK.getText(), Double.parseDouble(tf_SoTienGui.getText()), nd.getMaNV()) != -1) {
+        if (guiTien.guiTien(tf_SoTK.getText(), Double.parseDouble(tf_SoTienGui.getText()), nd.getMaNV()) != -1) {
             tf_SoTienGui.setText("");
             displayMovements();
         }
     }//GEN-LAST:event_btn_GuiTienActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btn_RutTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RutTienActionPerformed
+        
+    }//GEN-LAST:event_btn_RutTienActionPerformed
 
     private void btn_GiaoDichMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GiaoDichMousePressed
         selectedTaskBar(giaodich, ind_4, btn_GiaoDich);
@@ -1746,6 +1744,10 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_TimSoTKMousePressed
 
+    private void tf_SoTienGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_SoTienGuiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tf_SoTienGuiActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1767,7 +1769,8 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Display;
-    private javax.swing.JPanel btn_ChuyenTien;
+    private javax.swing.JPanel btn_BaoCao;
+    private javax.swing.JButton btn_ChuyenTien;
     private javax.swing.JPanel btn_ChuyenTien1;
     private javax.swing.JPanel btn_GiaoDich;
     private javax.swing.JPanel btn_GiaoDich1;
@@ -1778,6 +1781,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel btn_KhachHang1;
     private javax.swing.JPanel btn_NhanVien;
     private javax.swing.JPanel btn_NhanVien1;
+    private javax.swing.JButton btn_RutTien;
     private javax.swing.JPanel btn_TaiKhoan;
     private javax.swing.JPanel btn_TaiKhoan1;
     private javax.swing.JLabel btn_TimSoTK;
@@ -1799,8 +1803,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel ind_7;
     private javax.swing.JPanel ind_8;
     private javax.swing.JPanel ind_9;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1839,7 +1841,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -1863,16 +1864,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lbl_HoTen;
     private javax.swing.JLabel lbl_HoTenNV_dn;
     private javax.swing.JLabel lbl_HoTenNV_dn1;
     private javax.swing.JLabel lbl_QuyenNV_dn;
     private javax.swing.JLabel lbl_QuyenNV_dn1;
+    private javax.swing.JLabel lbl_SoDu;
     private javax.swing.JLabel lbl_cmnd;
     private javax.swing.JLabel lbl_cmnd1;
     private javax.swing.JLabel lbl_hoTen;
@@ -1892,7 +1891,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTable tbl_khachHang;
     private javax.swing.JTable tbl_movements;
     private javax.swing.JTextField tf_SoTK;
+    private javax.swing.JTextField tf_SoTaiKhoanChuyen;
+    private javax.swing.JTextField tf_SoTienChuyen;
     private javax.swing.JTextField tf_SoTienGui;
+    private javax.swing.JTextField tf_SoTienRut;
     // End of variables declaration//GEN-END:variables
 
 }
