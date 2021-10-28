@@ -11,14 +11,19 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import model.CurrentAccount;
 import model.GiaoDich;
 import model.KhachHang;
 import model.NguoiDung;
 import model.NhanVien;
+import model.TaiKhoan;
+import service.CurrentAccountService;
+import service.GDChuyenTienService;
 import service.GDGoiRutService;
 import service.GiaoDichService;
 import service.KhachHangService;
 import service.NhanVienService;
+import service.TaiKhoanService;
 
 /**
  *
@@ -32,17 +37,13 @@ public class Home extends javax.swing.JFrame {
     NguoiDung nd;
     ArrayList<NhanVien> dsnv;
     ArrayList<KhachHang> dskh;
+    CurrentAccount currentAccount = null;
 
     public Home(NguoiDung nd) {
         this.nd = nd;
         initComponents();
-        setColor(btn_Home);
-        ind_1.setOpaque(true);
-        resetColor(new JPanel[]{btn_BaoCao, btn_KhachHang, btn_TaiKhoan, btn_GiaoDich, btn_NhanVien}, new JPanel[]{ind_5, ind_2, ind_3, ind_4, ind_6});
-        home.setVisible(true);
-        employee.setVisible(false);
-        customer.setVisible(false);
-        System.out.println(nd.getTenNhom());
+
+        selectedTaskBar(home, ind_1, btn_Home);
         if (nd.getTenNhom().equals("CHINHANH")) {
             task_bar.setVisible(true);
             task_bar1.setVisible(false);
@@ -117,8 +118,11 @@ public class Home extends javax.swing.JFrame {
         giaodich = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         lbl_cmnd = new javax.swing.JLabel();
-        jSeparator9 = new javax.swing.JSeparator();
         lbl_HoTen = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
         pnl_10 = new javax.swing.JPanel();
         pnl_GiaoDich = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -126,7 +130,7 @@ public class Home extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        tf_SoTaiKhoanChuyen = new javax.swing.JTextField();
+        tf_SoTKNhan = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tf_SoTienChuyen = new javax.swing.JTextField();
         btn_ChuyenTien = new javax.swing.JButton();
@@ -143,11 +147,11 @@ public class Home extends javax.swing.JFrame {
         jLabel51 = new javax.swing.JLabel();
         lbl_SoDu = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
-        jLabel31 = new javax.swing.JLabel();
-        tf_SoTK = new javax.swing.JTextField();
+        lbl_messageGD = new javax.swing.JLabel();
+        tf_TimSoTK = new javax.swing.JTextField();
         btn_TimSoTK = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        lbl_cmnd1 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
         employee = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -170,11 +174,6 @@ public class Home extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         customer = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        lbl_maNV2 = new javax.swing.JLabel();
-        jSeparator7 = new javax.swing.JSeparator();
-        jLabel44 = new javax.swing.JLabel();
         pnl_8 = new javax.swing.JPanel();
         pnl_9 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -190,6 +189,11 @@ public class Home extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        jLabel32 = new javax.swing.JLabel();
+        lbl_maNV1 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        lbl_hoTen1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ngân Hàng");
@@ -391,9 +395,6 @@ public class Home extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_BaoCaoMouseClicked(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                btn_BaoCaoMouseReleased(evt);
-            }
         });
 
         ind_5.setOpaque(false);
@@ -498,7 +499,7 @@ public class Home extends javax.swing.JFrame {
         lbl_HoTenNV_dn.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lbl_HoTenNV_dn.setForeground(new java.awt.Color(255, 255, 255));
         lbl_HoTenNV_dn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_HoTenNV_dn.setText("Nguyễn Văn Bình");
+        lbl_HoTenNV_dn.setText("Ngô Sĩ Tiến");
         task_bar.add(lbl_HoTenNV_dn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 110, 20));
 
         lbl_QuyenNV_dn.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
@@ -509,7 +510,7 @@ public class Home extends javax.swing.JFrame {
         lbl_maNV_dn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_maNV_dn.setForeground(new java.awt.Color(255, 255, 255));
         lbl_maNV_dn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_maNV_dn.setText("NV1");
+        lbl_maNV_dn.setText("NV2");
         task_bar.add(lbl_maNV_dn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 50, 20));
 
         getContentPane().add(task_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 590));
@@ -671,7 +672,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel36.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel36.setText(" Giao Dịch");
+        jLabel36.setText("Giao Dịch");
 
         javax.swing.GroupLayout btn_GiaoDich1Layout = new javax.swing.GroupLayout(btn_GiaoDich1);
         btn_GiaoDich1.setLayout(btn_GiaoDich1Layout);
@@ -809,7 +810,7 @@ public class Home extends javax.swing.JFrame {
         lbl_HoTenNV_dn1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         lbl_HoTenNV_dn1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_HoTenNV_dn1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_HoTenNV_dn1.setText("Ngô Sĩ Tiến");
+        lbl_HoTenNV_dn1.setText("Nguyễn Văn Bình");
         task_bar1.add(lbl_HoTenNV_dn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 110, 20));
 
         lbl_QuyenNV_dn1.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
@@ -820,7 +821,7 @@ public class Home extends javax.swing.JFrame {
         lbl_maNV_dn1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lbl_maNV_dn1.setForeground(new java.awt.Color(255, 255, 255));
         lbl_maNV_dn1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_maNV_dn1.setText("NV4");
+        lbl_maNV_dn1.setText("NV1");
         task_bar1.add(lbl_maNV_dn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 50, 20));
 
         getContentPane().add(task_bar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 590));
@@ -843,21 +844,46 @@ public class Home extends javax.swing.JFrame {
         jPanel11.setBackground(new java.awt.Color(120, 168, 252));
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbl_cmnd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lbl_cmnd.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         lbl_cmnd.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_cmnd.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_cmnd.setText("CMND");
         lbl_cmnd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel11.add(lbl_cmnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 20));
-        jPanel11.add(jSeparator9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 38, 200, 20));
+        jPanel11.add(lbl_cmnd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 102, 120, -1));
 
-        lbl_HoTen.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_HoTen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         lbl_HoTen.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_HoTen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_HoTen.setText("HO TEN");
-        jPanel11.add(lbl_HoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 200, 30));
+        jPanel11.add(lbl_HoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 200, 20));
 
-        giaodich.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 219, 100));
+        jPanel4.setBackground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 220, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 30, Short.MAX_VALUE)
+        );
+
+        jPanel11.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 220, 30));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("PTIT");
+        jPanel11.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 40, 30));
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 8)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("banking");
+        jPanel11.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, -1, -1));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/icons8_play_25px.png"))); // NOI18N
+        jPanel11.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(195, 60, -1, 20));
+
+        giaodich.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 219, 130));
 
         pnl_10.setBackground(new java.awt.Color(255, 255, 255));
         pnl_10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -899,10 +925,10 @@ public class Home extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -928,10 +954,11 @@ public class Home extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(51, 51, 51));
         jLabel3.setText("Chuyển tiền");
 
-        tf_SoTaiKhoanChuyen.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_SoTKNhan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel4.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel4.setText("Số tài khoản gửi");
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Số tài khoản nhận");
 
         tf_SoTienChuyen.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
@@ -956,12 +983,10 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel4)
-                                .addGap(20, 20, 20))
-                            .addComponent(tf_SoTaiKhoanChuyen, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tf_SoTKNhan, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -969,7 +994,7 @@ public class Home extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btn_ChuyenTien))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
+                                .addGap(52, 52, 52)
                                 .addComponent(jLabel5)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -983,7 +1008,7 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(tf_SoTienChuyen)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_ChuyenTien)
-                        .addComponent(tf_SoTaiKhoanChuyen)))
+                        .addComponent(tf_SoTKNhan)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -998,11 +1023,6 @@ public class Home extends javax.swing.JFrame {
         jLabel6.setText("Gửi tiền");
 
         tf_SoTienGui.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_SoTienGui.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_SoTienGuiActionPerformed(evt);
-            }
-        });
 
         btn_GuiTien.setBackground(new java.awt.Color(255, 255, 255));
         btn_GuiTien.setText("→");
@@ -1109,32 +1129,32 @@ public class Home extends javax.swing.JFrame {
             pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_GiaoDichLayout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_GiaoDichLayout.createSequentialGroup()
+                        .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnl_GiaoDichLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lbl_SoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)))
-                .addContainerGap())
+                        .addGap(29, 29, 29))))
         );
         pnl_GiaoDichLayout.setVerticalGroup(
             pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnl_GiaoDichLayout.createSequentialGroup()
-                .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(33, 33, 33)
+                .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(pnl_GiaoDichLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 361, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnl_GiaoDichLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnl_GiaoDichLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lbl_SoDu, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
+                        .addGap(28, 28, 28)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1147,9 +1167,9 @@ public class Home extends javax.swing.JFrame {
 
         jPanel17.setBackground(new java.awt.Color(242, 247, 247));
 
-        jLabel31.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel31.setText("Thông báo");
+        lbl_messageGD.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lbl_messageGD.setForeground(new java.awt.Color(102, 102, 102));
+        lbl_messageGD.setText("Thông báo");
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
@@ -1157,14 +1177,14 @@ public class Home extends javax.swing.JFrame {
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jLabel31)
+                .addComponent(lbl_messageGD)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel17Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lbl_messageGD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(26, 26, 26))
         );
 
@@ -1172,32 +1192,28 @@ public class Home extends javax.swing.JFrame {
 
         giaodich.add(pnl_10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 11, 750, 570));
 
-        tf_SoTK.setBackground(new java.awt.Color(123, 156, 225));
-        tf_SoTK.setForeground(new java.awt.Color(255, 255, 255));
-        tf_SoTK.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tf_SoTK.setBorder(null);
-        tf_SoTK.setCaretColor(new java.awt.Color(255, 255, 255));
-        tf_SoTK.setPreferredSize(new java.awt.Dimension(2, 20));
-        giaodich.add(tf_SoTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 141, -1));
+        tf_TimSoTK.setBackground(new java.awt.Color(123, 156, 225));
+        tf_TimSoTK.setForeground(new java.awt.Color(255, 255, 255));
+        tf_TimSoTK.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tf_TimSoTK.setBorder(null);
+        tf_TimSoTK.setCaretColor(new java.awt.Color(255, 255, 255));
+        tf_TimSoTK.setPreferredSize(new java.awt.Dimension(2, 20));
+        giaodich.add(tf_TimSoTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 141, -1));
 
         btn_TimSoTK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/icons8_Search_18px.png"))); // NOI18N
         btn_TimSoTK.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btn_TimSoTK.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btn_TimSoTKMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_TimSoTKMouseClicked(evt);
             }
         });
-        giaodich.add(btn_TimSoTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, -1, 20));
+        giaodich.add(btn_TimSoTK, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, -1, 20));
 
         jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/icons8_plus_math_25px.png"))); // NOI18N
         giaodich.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 500, -1, -1));
 
-        lbl_cmnd1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        lbl_cmnd1.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_cmnd1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_cmnd1.setText("Nhập số tài khoản");
-        lbl_cmnd1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        giaodich.add(lbl_cmnd1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 140, 20));
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/icons8_credit_control_50px.png"))); // NOI18N
+        giaodich.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 50, 50));
 
         Display.add(giaodich, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 590));
 
@@ -1318,11 +1334,6 @@ public class Home extends javax.swing.JFrame {
         jLabel42.setForeground(new java.awt.Color(255, 255, 255));
         jLabel42.setText("Sửa thông tin");
         jLabel42.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel42.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel42MouseClicked(evt);
-            }
-        });
 
         jLabel43.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel43.setForeground(new java.awt.Color(255, 255, 255));
@@ -1383,25 +1394,6 @@ public class Home extends javax.swing.JFrame {
 
         customer.setBackground(new java.awt.Color(71, 120, 197));
         customer.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel10.setBackground(new java.awt.Color(120, 168, 252));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/imge_1.jpg"))); // NOI18N
-        jPanel10.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 90));
-
-        lbl_maNV2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        lbl_maNV2.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_maNV2.setText("KH1");
-        jPanel10.add(lbl_maNV2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 60, 30));
-        jPanel10.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 60, 8));
-
-        jLabel44.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel44.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel44.setText("Bùi Tấn Sang");
-        jPanel10.add(jLabel44, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, 30));
-
-        customer.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 219, 118));
 
         pnl_8.setBackground(new java.awt.Color(255, 255, 255));
         pnl_8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1554,7 +1546,7 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        customer.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 220, 110));
+        customer.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 220, 110));
 
         jTextField4.setBackground(new java.awt.Color(123, 156, 225));
         jTextField4.setForeground(new java.awt.Color(255, 255, 255));
@@ -1569,6 +1561,25 @@ public class Home extends javax.swing.JFrame {
 
         jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/icons8_plus_math_25px.png"))); // NOI18N
         customer.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 500, -1, -1));
+
+        jPanel12.setBackground(new java.awt.Color(120, 168, 252));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/swing/images/imge_1.jpg"))); // NOI18N
+        jPanel12.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 90));
+
+        lbl_maNV1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_maNV1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_maNV1.setText("241852101");
+        jPanel12.add(lbl_maNV1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 110, 30));
+        jPanel12.add(jSeparator7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 60, 8));
+
+        lbl_hoTen1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        lbl_hoTen1.setForeground(new java.awt.Color(255, 255, 255));
+        lbl_hoTen1.setText("Nguyễn Văn Bình");
+        jPanel12.add(lbl_hoTen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, 30));
+
+        customer.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 219, 118));
 
         Display.add(customer, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 590));
 
@@ -1626,17 +1637,9 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_exitMousePressed
 
-    private void btn_BaoCaoMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BaoCaoMouseReleased
-
-    }//GEN-LAST:event_btn_BaoCaoMouseReleased
-
     private void btn_BaoCaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_BaoCaoMouseClicked
 
     }//GEN-LAST:event_btn_BaoCaoMouseClicked
-
-    private void jLabel42MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel42MouseClicked
-        pnl_7.setVisible(false);
-    }//GEN-LAST:event_jLabel42MouseClicked
 
     private void btn_NhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_NhanVienMouseClicked
         selectedTaskBar(employee, ind_6, btn_NhanVien);
@@ -1664,6 +1667,7 @@ public class Home extends javax.swing.JFrame {
         lbl_maNV.setText(maNV);
         lbl_hoTen.setText(hoTen);
     }//GEN-LAST:event_tbl_NhanVienMouseClicked
+
 
     private void btn_Home1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_Home1MousePressed
         // TODO add your handling code here:
@@ -1694,62 +1698,116 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_exit1MousePressed
 
     private void btn_ChuyenTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ChuyenTienActionPerformed
-        // TODO add your handling code here:
+        GDChuyenTienService gd = new GDChuyenTienService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
+        if(!checkSoTK(tf_SoTKNhan.getText())){
+            lbl_messageGD.setText("Số tài khoản nhận không đúng!");
+        }
+        else if (!checkTien(tf_SoTienChuyen.getText())) {
+            lbl_messageGD.setText("Kiểm tra lại số tiền chuyển!");
+        }
+        else {
+            if (gd.chuyenTien(currentAccount.getSoTK(), Long.parseLong(tf_SoTienChuyen.getText()), tf_SoTKNhan.getText(), nd.getMaNV()) != -1) {
+                currentAccount = new CurrentAccountService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).currentAccount(currentAccount.getSoTK());
+                tf_SoTKNhan.setText("");
+                tf_SoTienChuyen.setText("");
+                updateUIGiaoDich();
+            } else {
+                lbl_messageGD.setText("Lỗi chuyển tiền!");
+            }
+        }
     }//GEN-LAST:event_btn_ChuyenTienActionPerformed
 
     private void btn_GuiTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuiTienActionPerformed
-        GDGoiRutService guiTien = new GDGoiRutService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
-        if (guiTien.guiTien(tf_SoTK.getText(), Double.parseDouble(tf_SoTienGui.getText()), nd.getMaNV()) != -1) {
-            tf_SoTienGui.setText("");
-            displayMovements();
+        GDGoiRutService gd = new GDGoiRutService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
+        if (checkTien(tf_SoTienGui.getText())) {
+            if (gd.guiTien(currentAccount.getSoTK(), Long.parseLong(tf_SoTienGui.getText()), nd.getMaNV()) != -1) {
+                currentAccount = new CurrentAccountService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).currentAccount(currentAccount.getSoTK());
+                tf_SoTienGui.setText("");
+                updateUIGiaoDich();
+            } else {
+                lbl_messageGD.setText("Lỗi gủi tiền!");
+            }
+        } else {
+            lbl_messageGD.setText("Kiểm tra lại số tiền gửi!");
         }
     }//GEN-LAST:event_btn_GuiTienActionPerformed
 
     private void btn_RutTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_RutTienActionPerformed
-        
+        GDGoiRutService gd = new GDGoiRutService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
+        if (checkTien(tf_SoTienRut.getText())) {
+            if (gd.rutTien(currentAccount.getSoTK(), Long.parseLong(tf_SoTienRut.getText()), nd.getMaNV()) != -1) {
+                currentAccount = new CurrentAccountService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).currentAccount(currentAccount.getSoTK());
+                tf_SoTienRut.setText("");
+                updateUIGiaoDich();
+            } else {
+                lbl_messageGD.setText("Lỗi rút tiền!");
+            }
+        } else {
+            lbl_messageGD.setText("Kiểm tra lại số tiền rút!");
+        }
     }//GEN-LAST:event_btn_RutTienActionPerformed
+
+    private void btn_TimSoTKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TimSoTKMouseClicked
+        currentAccount = new CurrentAccountService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).currentAccount(tf_TimSoTK.getText());
+        updateUIGiaoDich();
+    }//GEN-LAST:event_btn_TimSoTKMouseClicked
 
     private void btn_GiaoDichMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GiaoDichMousePressed
         selectedTaskBar(giaodich, ind_4, btn_GiaoDich);
         pnl_GiaoDich.setVisible(false);
+        currentAccount = null;
+        updateUIGiaoDich();
+        tf_TimSoTK.setText("");
     }//GEN-LAST:event_btn_GiaoDichMousePressed
+
+    private boolean checkTien(String str) {
+        try {
+            Long.parseLong(str);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    private boolean checkSoTK(String str) {
+        
+        boolean check =  new TaiKhoanService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).checkSoTK(str);
+        System.out.println(str);
+        System.out.println(check);
+        return check;
+    }
 
     private void displayMovements() {
         DefaultTableModel dtmMovements = (DefaultTableModel) tbl_movements.getModel();
-        ArrayList<GiaoDich> movs = new GiaoDichService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).displayMovements(tf_SoTK.getText());
+        ArrayList<GiaoDich> movs = new GiaoDichService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau()).displayMovements(currentAccount.getSoTK());
         dtmMovements.setRowCount(0);
         for (GiaoDich gd : movs) {
             Vector<Object> vec = new Vector<Object>();
             vec.add(gd.getMaGD());
             vec.add(gd.getLoaiGD());
             vec.add(gd.getNgayGD());
-            vec.add(gd.getSotien());
+            vec.add(gd.soTien());
             dtmMovements.addRow(vec);
         }
     }
 
-    private void btn_TimSoTKMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_TimSoTKMousePressed
-        KhachHangService khs = new KhachHangService(nd.getTenServer(), nd.getTaiKhoan(), nd.getMatKhau());
-        KhachHang kh = khs.timKhachHangBangSoTK(tf_SoTK.getText());
-
-        if (kh != null) {
-            lbl_cmnd.setText(kh.getCmnd());
-            lbl_HoTen.setText(kh.getHo() + " " + kh.getTen());
+    private void updateUIGiaoDich() {
+        lbl_messageGD.setText("Thông tin giao dịch");
+        if (currentAccount != null) {
             pnl_GiaoDich.setVisible(true);
+            lbl_HoTen.setText(currentAccount.getHo() + " " + currentAccount.getTen());
+            lbl_cmnd.setText(currentAccount.getCmnd());
+            lbl_SoDu.setText(currentAccount.soDu() + "");
             displayMovements();
         } else {
-            lbl_cmnd.setText("CMND");
             lbl_HoTen.setText("HO TEN");
+            lbl_cmnd.setText("CMND");
             pnl_GiaoDich.setVisible(false);
         }
-    }//GEN-LAST:event_btn_TimSoTKMousePressed
-
-    private void tf_SoTienGuiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_SoTienGuiActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tf_SoTienGuiActionPerformed
+    }
 
     /**
-     * @param args the command line arguments
+     * @ptf_timSoTKgs the command line arguments
      */
     private void setColor(JPanel pane) {
         pane.setBackground(new Color(41, 57, 80));
@@ -1826,7 +1884,10 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
@@ -1837,7 +1898,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
-    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel5;
@@ -1846,8 +1906,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
@@ -1855,6 +1915,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1863,7 +1924,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel lbl_HoTen;
@@ -1873,12 +1933,13 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_QuyenNV_dn1;
     private javax.swing.JLabel lbl_SoDu;
     private javax.swing.JLabel lbl_cmnd;
-    private javax.swing.JLabel lbl_cmnd1;
     private javax.swing.JLabel lbl_hoTen;
+    private javax.swing.JLabel lbl_hoTen1;
     private javax.swing.JLabel lbl_maNV;
-    private javax.swing.JLabel lbl_maNV2;
+    private javax.swing.JLabel lbl_maNV1;
     private javax.swing.JLabel lbl_maNV_dn;
     private javax.swing.JLabel lbl_maNV_dn1;
+    private javax.swing.JLabel lbl_messageGD;
     private javax.swing.JPanel pnl_10;
     private javax.swing.JPanel pnl_6;
     private javax.swing.JPanel pnl_7;
@@ -1890,11 +1951,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JTable tbl_NhanVien;
     private javax.swing.JTable tbl_khachHang;
     private javax.swing.JTable tbl_movements;
-    private javax.swing.JTextField tf_SoTK;
-    private javax.swing.JTextField tf_SoTaiKhoanChuyen;
+    private javax.swing.JTextField tf_SoTKNhan;
     private javax.swing.JTextField tf_SoTienChuyen;
     private javax.swing.JTextField tf_SoTienGui;
     private javax.swing.JTextField tf_SoTienRut;
+    private javax.swing.JTextField tf_TimSoTK;
     // End of variables declaration//GEN-END:variables
 
 }

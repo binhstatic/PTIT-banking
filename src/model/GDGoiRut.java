@@ -14,7 +14,7 @@ public class GDGoiRut {
     String soTK;
     String loaiGD;
     String ngayGD;
-    double sotien;
+    long sotien;
     String maNV;
 
     public String getMaGD() {
@@ -49,11 +49,11 @@ public class GDGoiRut {
         this.ngayGD = ngayGD;
     }
 
-    public double getSotien() {
+    public long getSotien() {
         return sotien;
     }
 
-    public void setSotien(double sotien) {
+    public void setSotien(long sotien) {
         this.sotien = sotien;
     }
 

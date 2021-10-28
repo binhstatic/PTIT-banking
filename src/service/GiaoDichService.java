@@ -33,7 +33,7 @@ public class GiaoDichService extends SQLServerServiceQuyen{
                 gd.setMaGD(result.getString(1));
                 gd.setLoaiGD(result.getString(2));
                 gd.setNgayGD(result.getDate(3));
-                gd.setSotien(result.getDouble(4));
+                gd.setSotien(result.getLong(4));
                 vec.add(gd);
             }
         } catch (Exception e) {

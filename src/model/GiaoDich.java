@@ -6,6 +6,8 @@
 package model;
 
 import java.sql.Date;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
@@ -15,8 +17,14 @@ public class GiaoDich {
     String maGD;
     String loaiGD;
     Date ngayGD;
-    Double sotien;
+    long sotien;
 
+    public String soTien() {
+        Locale tien = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(tien);
+        return format.format(this.sotien);
+    }
+    
     public String getMaGD() {
         return maGD;
     }
@@ -41,11 +49,11 @@ public class GiaoDich {
         this.ngayGD = ngayGD;
     }
 
-    public Double getSotien() {
+    public long getSotien() {
         return sotien;
     }
 
-    public void setSotien(Double sotien) {
+    public void setSotien(long sotien) {
         this.sotien = sotien;
     }
     

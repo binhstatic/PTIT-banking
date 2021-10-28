@@ -5,18 +5,26 @@
  */
 package model;
 
-import java.sql.Date;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
  * @author Binh
  */
-public class TaiKhoan {
+public class CurrentAccount {
+
     String soTK;
+    String ho;
+    String ten;
     String cmnd;
     long soDu;
-    String maCN;
-    Date ngayMoTK;
+
+    public String soDu() {
+        Locale tien = new Locale("vi", "VN");
+        NumberFormat format = NumberFormat.getCurrencyInstance(tien);
+        return format.format(this.soDu);
+    }
 
     public String getSoTK() {
         return soTK;
@@ -24,6 +32,22 @@ public class TaiKhoan {
 
     public void setSoTK(String soTK) {
         this.soTK = soTK;
+    }
+
+    public String getHo() {
+        return ho;
+    }
+
+    public void setHo(String ho) {
+        this.ho = ho;
+    }
+
+    public String getTen() {
+        return ten;
+    }
+
+    public void setTen(String ten) {
+        this.ten = ten;
     }
 
     public String getCmnd() {
@@ -42,21 +66,4 @@ public class TaiKhoan {
         this.soDu = soDu;
     }
 
-    public String getMaCN() {
-        return maCN;
-    }
-
-    public void setMaCN(String maCN) {
-        this.maCN = maCN;
-    }
-
-    public Date getNgayMoTK() {
-        return ngayMoTK;
-    }
-
-    public void setNgayMoTK(Date ngayMoTK) {
-        this.ngayMoTK = ngayMoTK;
-    }
-    
-    
 }

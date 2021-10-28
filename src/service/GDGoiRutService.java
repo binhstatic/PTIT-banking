@@ -17,13 +17,13 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
     public GDGoiRutService(String tenServer, String taiKhoan, String matKhau) {
         super(tenServer, taiKhoan, matKhau);
     }
-   
-     public int guiTien(String sotk, double sotien, String manv) {
+
+    public int guiTien(String sotk, long sotien, String manv) {
         try {
             String sql = "exec [dbo].[sp_GuiTien] ?, ?, ?";
-            PreparedStatement preStatement=connection.prepareStatement(sql);
+            PreparedStatement preStatement = connection.prepareStatement(sql);
             preStatement.setString(1, sotk);
-            preStatement.setDouble(2, sotien);
+            preStatement.setLong(2, sotien);
             preStatement.setString(3, manv);
             return preStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -31,13 +31,13 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
         }
         return -1;
     }
-    
-    public int rutTien(String sotk, double sotien, String manv) {
+
+    public int rutTien(String sotk, long sotien, String manv) {
         try {
             String sql = "exec [dbo].[sp_RutTien] ?, ?, ?";
-            PreparedStatement preStatement=connection.prepareStatement(sql);
+            PreparedStatement preStatement = connection.prepareStatement(sql);
             preStatement.setString(1, sotk);
-            preStatement.setDouble(2, sotien);
+            preStatement.setLong(2, sotien);
             preStatement.setString(3, manv);
             return preStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -45,6 +45,5 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
         }
         return -1;
     }
-     
-     
+
 }

@@ -45,29 +45,4 @@ public class KhachHangService extends SQLServerServiceQuyen {
         }
         return vec;
     }
-
-    public KhachHang timKhachHangBangSoTK(String sotk) {
-        KhachHang kh = new KhachHang();
-        try {
-            String sql = "exec [dbo].[sp_LayThongTinTuSoTK] ?";
-            PreparedStatement preStatement = connection.prepareStatement(sql);
-            preStatement.setString(1, sotk);
-
-            ResultSet result = preStatement.executeQuery();
-            if (result.next()) {
-                kh.setCmnd(result.getString(1));
-                kh.setHo(result.getString(2));
-                kh.setTen(result.getString(3));
-                kh.setDiachi(result.getString(4));
-                kh.setPhai(result.getString(5));
-                kh.setNgaycap(result.getString(6));
-                kh.setSdt(result.getString(7));
-                kh.setMaCN(result.getString(8));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return kh;
-    }
 }

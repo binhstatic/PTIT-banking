@@ -13,7 +13,7 @@ public class GDChuyenTien {
     String maGD;
     String soTK_Chuyen;
     String ngayGD;
-    double sotien;
+    long sotien;
     String soTK_Nhan;
     String maNV;
 
@@ -41,11 +41,11 @@ public class GDChuyenTien {
         this.ngayGD = ngayGD;
     }
 
-    public double getSotien() {
+    public long getSotien() {
         return sotien;
     }
 
-    public void setSotien(double sotien) {
+    public void setSotien(long sotien) {
         this.sotien = sotien;
     }
 
