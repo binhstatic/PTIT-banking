@@ -26,10 +26,13 @@ public class GDChuyenTienService extends SQLServerServiceQuyen {
             preStatement.setLong(2, sotien);
             preStatement.setString(3, sotk_nhan);
             preStatement.setString(4, manv);
-            return preStatement.executeUpdate();
+            
+            int kq = preStatement.executeUpdate();
+            System.out.println(kq);
+            return kq;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 }

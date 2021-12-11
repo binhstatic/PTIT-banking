@@ -7,6 +7,7 @@ package service;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import model.GiaoDich;
 
@@ -26,8 +27,8 @@ public class GiaoDichService extends SQLServerServiceQuyen{
             String sql = "exec [dbo].[sp_DisplayMovements] ?";
             PreparedStatement preStatement = connection.prepareStatement(sql);
             preStatement.setString(1, sotk);
-
             ResultSet result = preStatement.executeQuery();
+            
             while (result.next()) {
                 GiaoDich gd = new GiaoDich();
                 gd.setMaGD(result.getString(1));

@@ -25,11 +25,14 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
             preStatement.setString(1, sotk);
             preStatement.setLong(2, sotien);
             preStatement.setString(3, manv);
-            return preStatement.executeUpdate();
+            
+            int kq = preStatement.executeUpdate();
+            System.out.println(kq);
+            return kq;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 
     public int rutTien(String sotk, long sotien, String manv) {
@@ -39,11 +42,14 @@ public class GDGoiRutService extends SQLServerServiceQuyen {
             preStatement.setString(1, sotk);
             preStatement.setLong(2, sotien);
             preStatement.setString(3, manv);
-            return preStatement.executeUpdate();
+            
+            int kq = preStatement.executeUpdate();
+            System.out.println(kq);
+            return kq;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return -1;
+        return 0;
     }
 
 }

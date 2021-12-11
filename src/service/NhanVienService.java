@@ -5,6 +5,7 @@
  */
 package service;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,5 +43,31 @@ public class NhanVienService extends SQLServerServiceQuyen {
             ex.printStackTrace();
         }
         return vec;
+    }
+     public int themNV(String maNV, String ho, String ten, String diaChi, String phai, String soDT, String login, String pass) {
+        try {
+            String sql = "exec [dbo].[sp_ThemNV] ?, ?, ?, ?, ?, ?, ?, ?";
+            PreparedStatement preStatement = connection.prepareStatement(sql);
+            preStatement.setString(1, maNV);
+            preStatement.setString(2, ho);
+            preStatement.setString(3, ten);
+            preStatement.setString(4, diaChi);
+            preStatement.setString(5, phai);
+            preStatement.setString(6, soDT);
+            preStatement.setString(7, login);
+            preStatement.setString(8, pass);
+            return preStatement.executeUpdate();
+        } catch (SQLException ex) {
+            if(ex.getMessage().equalsIgnoreCase("Ma Nhan Vien da ton tai"))
+            {
+                return 0;
+            }
+            if(ex.getMessage().contains("The server principal"))
+            {
+                return 2;
+            }
+            System.out.println(ex.getMessage());
+        }
+        return -1;
     }
 }

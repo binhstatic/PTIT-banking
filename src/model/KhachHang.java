@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author Binh
@@ -69,6 +71,8 @@ public class KhachHang {
     public void setNgaycap(String ngaycap) {
         this.ngaycap = ngaycap;
     }
+
+    
 
     public String getSdt() {
         return sdt;
